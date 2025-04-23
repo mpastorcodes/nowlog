@@ -5,13 +5,17 @@ class LogsController < ApplicationController
   end
 
   def create
-    @log = Log.new(log_params)
-    
-    if @log.save
-      redirect_to root_path, notice: "Logged."
+    if request.get?
+      render :create
     else
-      @logs = Log.order(created_at: :desc).limit(10)
-      render :index, status: :unprocessable_entity
+      @log = Log.new(log_params)
+      
+      if @log.save
+        redirect_to root_path, notice: "Log was successfully created."
+      else
+        @logs = Log.order(created_at: :desc).limit(10)
+        render :index, status: :unprocessable_entity
+      end
     end
   end
 
