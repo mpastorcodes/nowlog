@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  get "logs", to: "logs#index", as: :logs_index
+  get "logs/create", to: "logs#create", as: :logs_create
   root "logs#index"
-  post "logs/create", to: "logs#create", as: :create_log
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
