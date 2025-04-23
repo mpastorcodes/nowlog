@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="header">
+    <h1>nowlog</h1>
+    <p class="tagline">log a moment — move on</p>
+  </div>
+
+  <% if notice %>
+    <div class="notice"><%= notice %></div>
+  <% end %>
+
+  <div class="log-form">
+    <%= form_with(model: @log, url: create_log_path, method: :post) do |form| %>
+      <% if @log.errors.any? %>
+        <div class="error">
+          <%= @log.errors.full_messages.join(", ") %>
+        </div>
+      <% end %>
+
+      <%= form.text_area :content, 
+                         placeholder: "What's happening now?", 
+                         autofocus: true, 
+                         rows: 1,
+                         class: "content-field",
+                         data: { controller: "autoresize" } %>
+      
+      <%= form.submit "Log", class: "log-button" %>
+    <% end %>
+  </div>
+
+  <div class="log-history">
+    <% @logs.each do |log| %>
+      <div class="log-entry">
+        <p class="content"><%= log.content %></p>
+        <p class="timestamp"><%= time_ago_in_words(log.created_at) %> ago</p>
+      </div>
+    <% end %>
+  </div>
+</div>
